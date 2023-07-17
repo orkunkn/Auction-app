@@ -36,6 +36,7 @@ public class AuctionService {
 		newAuction.setText(newAuctionRequest.getText());
 		newAuction.setTitle(newAuctionRequest.getTitle());
 		newAuction.setUser(user);
+		newAuction.setCategory(newAuctionRequest.getCategory());
 		newAuction.setCreateDate(new Date());
 		newAuction.setEndDate(newAuctionRequest.getEndDate());
 		return auctionRepository.save(newAuction);

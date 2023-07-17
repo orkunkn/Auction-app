@@ -17,5 +17,7 @@ public class AuctionCreateRequest {
 
     String text;
 
+    String category;
+
     Date endDate;
 }
