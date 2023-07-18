@@ -6,15 +6,15 @@ import lombok.Data;
 
 @Data
 public class OfferResponse {
-    
-    Long id;
 
-    Long userId;
+	Long id;
+
+	Long userId;
 
 	String username;
 
 	Long bid;
-	
+
 	public OfferResponse(Offer entity) {
 		this.id = entity.getId();
 		this.username = entity.getUser().getUsername();

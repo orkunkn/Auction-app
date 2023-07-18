@@ -17,22 +17,22 @@ import com.project.auctionapp.services.UserService;
 public class UserController {
 
 	private UserService userService;
-	
+
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
-	
+
 	@PostMapping
 	public User createUser(@RequestBody User newUser) {
 		return userService.saveOneUser(newUser);
 	}
-	
+
 	@GetMapping("/{userId}")
 	public UserResponse getOneUser(@PathVariable Long userId) {
 		User user = userService.getOneUserById(userId);
 		return new UserResponse(user);
 	}
-	
+
 	@DeleteMapping("/{userId}")
 	public void deleteOneUser(@PathVariable Long userId) {
 		userService.deleteUser(userId);

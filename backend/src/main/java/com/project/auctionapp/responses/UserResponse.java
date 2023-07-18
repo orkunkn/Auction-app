@@ -7,10 +7,10 @@ import lombok.Data;
 @Data
 public class UserResponse {
 
-    Long id;
+	Long id;
 
 	String username;
-	
+
 	public UserResponse(User entity) {
 		this.id = entity.getId();
 		this.username = entity.getUsername();

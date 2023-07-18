@@ -8,5 +8,9 @@ import com.project.auctionapp.entities.Offer;
 
 public interface OfferRepository extends JpaRepository<Offer, Long> {
 
-    List<Offer> findByAuctionId(Long auctionId);
+	List<Offer> findByUserIdAndAuctionId(Long userId, Long auctionId);
+
+	List<Offer> findByUserId(Long userId);
+
+	List<Offer> findByAuctionId(Long auctionId);
 }
