@@ -18,6 +18,13 @@ function Navbar() {
                             color: "white"
                         }} to="/">Home</Link>
                     </Typography>
+                    <Typography variant="h6" sx={{ flexGrow: 1, textAlign: "justify" }}>
+                        <Link style={{
+                            textDecoration: "none",
+                            boxShadow: "none",
+                            color: "white",
+                        }} to="/create">Create Auction</Link>
+                    </Typography>
                 </Toolbar>
             </AppBar>
         </Box>

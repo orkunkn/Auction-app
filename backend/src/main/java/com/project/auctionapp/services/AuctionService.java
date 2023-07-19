@@ -45,15 +45,14 @@ public class AuctionService {
 		User user = userService.getOneUserById(newAuctionRequest.getUserId());
 		if (user == null)
 			return null;
-
 		Auction newAuction = new Auction();
 		newAuction.setId(newAuctionRequest.getId());
 		newAuction.setText(newAuctionRequest.getText());
 		newAuction.setTitle(newAuctionRequest.getTitle());
 		newAuction.setUser(user);
 		newAuction.setCategory(newAuctionRequest.getCategory());
-		newAuction.setValue(newAuctionRequest.getValue());
 		newAuction.setCreateDate(new Date());
+		newAuction.setValue(newAuctionRequest.getValue());
 		return auctionRepository.save(newAuction);
 	}
 

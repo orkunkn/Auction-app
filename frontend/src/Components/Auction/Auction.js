@@ -9,9 +9,10 @@ import Typography from '@mui/material/Typography';
 import { Container } from "@mui/material";
 import Offer from "../Offer/Offer";
 import Button from "@mui/material/Button";
+import OfferForm from "../Offer/OfferForm";
 
 function Auction(props) {
-    const { title, text, auctionId, value } = props;
+    const { title, text, auctionId, value, category } = props;
     const [expanded, setExpanded] = useState(false);
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -29,7 +30,6 @@ function Auction(props) {
                 (result) => {
                     setIsLoaded(true);
                     setOfferList(result);
-                    console.log(result)
                 },
                 (error) => {
                     setIsLoaded(true);
@@ -44,7 +44,7 @@ function Auction(props) {
 
     return (
         <Card sx={{
-            width: 800,
+            width: 600,
             textAlign: "left",
             margin: 20
         }}>
@@ -52,7 +52,10 @@ function Auction(props) {
                 title={title}
             />
             <CardContent>
-                <Typography variant="body1" color="text.secondary" style={{ textAlign: 'center', paddingBottom: '50px' }}>
+                <Typography variant="body1" style={{ textAlign: 'center', paddingBottom: '50px' }}>
+                    Category:{category}
+                </Typography>
+                <Typography variant="body1" style={{ textAlign: 'center', paddingBottom: '50px' }}>
                     {text}
                 </Typography>
                 <Typography variant="h3" style={{ textAlign: 'center', borderStyle: 'solid', borderWidth: 'medium', borderRadius: '20px', borderColor: 'blue' }}>
@@ -74,6 +77,7 @@ function Auction(props) {
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <Container fixed>
+                    <OfferForm userId={1} auctionId={auctionId} ></OfferForm>
                     {error ? "error" :
                         isLoaded ? offerList.map(offer => (
                             <Offer bid={offer.bid}></Offer>

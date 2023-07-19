@@ -14,7 +14,7 @@ function Home() {
                 (result) => {
                     setIsLoaded(true);
                     setAuctionList(result);
-
+                    console.log(auctionList)
                 },
                 (error) => {
                     setIsLoaded(true);
@@ -36,12 +36,11 @@ function Home() {
             <div style={{
                 display: "flex",
                 flexWrap: "wrap",
-                justifyContent: "center",
-                alignItems: "center",
+                
                 backgroundColor: "#f0f5ff",
             }}>
                 {auctionList.map(auction => (
-                    <Auction title={auction.title} text={auction.text} value={auction.value} auctionId={auction.id}></Auction>
+                    <Auction title={auction.title} text={auction.text} value={auction.value} auctionId={auction.id} category={auction.category}></Auction>
                 ))}
             </div>
         );

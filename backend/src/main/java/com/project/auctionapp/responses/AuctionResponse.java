@@ -19,6 +19,8 @@ public class AuctionResponse {
 
 	String text;
 
+	String category;
+
 	public AuctionResponse(Auction entity) {
 		this.id = entity.getId();
 		this.userId = entity.getUser().getId();
@@ -26,5 +28,6 @@ public class AuctionResponse {
 		this.username = entity.getUser().getUsername();
 		this.title = entity.getTitle();
 		this.text = entity.getText();
+		this.category = entity.getCategory();
 	}
 }
