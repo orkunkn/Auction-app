@@ -1,24 +1,61 @@
 import { Button, CardContent, InputAdornment, OutlinedInput } from "@mui/material";
 import React, { useState } from "react";
 
+
 function OfferForm(props) {
     const { auctionId, userId } = props;
     const [bid, setBid] = useState(0);
+
+    const logOut = () => {
+        localStorage.removeItem("tokenKey")
+        localStorage.removeItem("currentUser")
+        localStorage.removeItem("refreshKey")
+        localStorage.removeItem("userName")
+        window.history.go(0)
+    }
+
     const saveOffer = () => {
-        fetch("/offers",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    auctionId: auctionId,
-                    userId: userId,
-                    bid: bid
-                }),
+        fetch("/offers", {
+            auctionId: auctionId,
+            userId: userId,
+            bid: bid
+        })
+            .then((res) => {
+                if (!res.ok) {
+                    fetch("/auth/refresh", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            userId: localStorage.getItem("currentUser"),
+                            refreshToken: localStorage.getItem("refreshKey")
+                        })
+                    })
+                        .then((res) => {
+                            if (!res.ok) {
+                                logOut();
+                            } else {
+                                return res.json()
+                            }
+                        })
+                        .then((result) => {
+                            console.log(result)
+
+                            if (result != undefined) {
+                                localStorage.setItem("tokenKey", result.accessToken);
+                                saveOffer();
+                            }
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                        })
+                } else
+                    res.json()
             })
-            .then((res) => res.json())
-            .catch((err) => console.log("error"))
+            .catch((err) => {
+                console.log(err)
+            })
     }
 
     const updateAuction = () => {

@@ -3,7 +3,7 @@ package com.project.auctionapp.requests;
 import lombok.Data;
 
 @Data
-public class UserCreateRequest {
+public class UserRequest {
     
     String username;
 

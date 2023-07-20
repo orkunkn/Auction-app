@@ -27,7 +27,7 @@ function AuctionForm({ userId }) {
             body: JSON.stringify({ title, userId, text, category, value }),
         })
             .then((res) => res.json())
-            .catch((err) => console.log("error"));
+            .catch((err) => console.log(err));
     };
 
     const handleSubmit = () => {

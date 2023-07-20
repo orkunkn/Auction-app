@@ -14,11 +14,14 @@ import com.project.auctionapp.requests.AuctionCreateRequest;
 import com.project.auctionapp.requests.AuctionUpdateRequest;
 import com.project.auctionapp.responses.AuctionResponse;
 
+import redis.clients.jedis.JedisPooled;
+
 @Service
 public class AuctionService {
 
 	private AuctionRepository auctionRepository;
 	private UserService userService;
+	private JedisPooled jedis = new JedisPooled("localhost", 6379);
 
 	public AuctionService(AuctionRepository auctionRepository, UserService userService) {
 		this.auctionRepository = auctionRepository;
@@ -52,16 +55,22 @@ public class AuctionService {
 		newAuction.setUser(user);
 		newAuction.setCategory(newAuctionRequest.getCategory());
 		newAuction.setCreateDate(new Date());
+		
 		newAuction.setValue(newAuctionRequest.getValue());
-		return auctionRepository.save(newAuction);
+		Auction result = auctionRepository.save(newAuction);
+		jedis.set(result.getId().toString(), newAuctionRequest.getValue().toString());
+		return result;
 	}
 
 	public Auction updateOneAuction(Long auctionId, AuctionUpdateRequest updateAuction) {
 		Optional<Auction> auction = auctionRepository.findById(auctionId);
 		if (auction.isPresent()) {
 			Auction toUpdate = auction.get();
-			if (updateAuction.getValue() != null)
+			if (updateAuction.getValue() != null && updateAuction.getValue() > Integer.parseInt(jedis.get(auctionId.toString())))
+			{
 				toUpdate.setValue(updateAuction.getValue());
+				jedis.set(toUpdate.getId().toString(), updateAuction.getValue().toString());
+			}
 			if (updateAuction.getText() != null)
 				toUpdate.setText(updateAuction.getText());
 			if (updateAuction.getTitle() != null)
