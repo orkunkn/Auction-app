@@ -72,6 +72,8 @@ public class SecurityConfig {
     		.authorizeRequests()
     		.requestMatchers("/auctions")
     		.permitAll()
+            .requestMatchers("/auctions/*")
+    		.permitAll()
     		.requestMatchers("/offers")
     		.permitAll()
     		.requestMatchers("/auth/**")

@@ -9,6 +9,8 @@ import { LockOpen } from "@mui/icons-material";
 
 function Navbar() {
 
+    let disabled = localStorage.getItem("currentUser") == null ? true : false
+
     const onClick = () => {
         localStorage.removeItem("tokenKey")
         localStorage.removeItem("currentUser")
@@ -28,13 +30,13 @@ function Navbar() {
                             color: "white"
                         }} to="/">Home</Link>
                     </Typography>
-                    <Typography variant="h6" sx={{ flexGrow: 1, textAlign: "justify" }}>
+                    {disabled ? "" : <Typography variant="h6" sx={{ flexGrow: 1, textAlign: "center" }}>
                         <Link style={{
                             textDecoration: "none",
                             boxShadow: "none",
                             color: "white",
                         }} to="/create">Create Auction</Link>
-                    </Typography>
+                    </Typography>}
                     <Typography variant="h6" sx={{ flexGrow: 1, textAlign: "right" }}>
                         {localStorage.getItem("currentUser") == null ? <Link style={{
                             textDecoration: "none",

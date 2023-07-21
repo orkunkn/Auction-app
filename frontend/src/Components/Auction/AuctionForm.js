@@ -6,6 +6,14 @@ import Typography from '@mui/material/Typography';
 import { Button, InputAdornment, OutlinedInput } from "@mui/material";
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import FormControl from "@mui/material/FormControl";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -16,6 +24,7 @@ function AuctionForm({ userId }) {
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [value, setValue] = useState(0);
+    const [endDate, setEndDate] = useState("");
     const [isSent, setIsSent] = useState(false);
 
     const saveAuction = () => {
@@ -24,19 +33,23 @@ function AuctionForm({ userId }) {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ title, userId, text, category, value }),
+            body: JSON.stringify({ title, userId, text, category, value, endDate }),
         })
             .then((res) => res.json())
             .catch((err) => console.log(err));
     };
 
     const handleSubmit = () => {
-        saveAuction();
-        setIsSent(true);
-        setTitle("");
-        setText("");
-        setValue(0);
-        setCategory("");
+        console.log(endDate)
+        if (title && text && category && value && endDate) {
+            saveAuction();
+            setIsSent(true);
+            setTitle("");
+            setText("");
+            setCategory("");
+            setValue(0);
+            setEndDate("");
+        }
     };
 
     const handleChange = (value, setState) => {
@@ -62,7 +75,6 @@ function AuctionForm({ userId }) {
                 <CardHeader
                     title={
                         <OutlinedInput
-                            id="outlined-adornment-amount"
                             multiline
                             placeholder="Title"
                             inputProps={{ maxLength: 50 }}
@@ -73,9 +85,8 @@ function AuctionForm({ userId }) {
                     }
                 />
                 <CardContent>
-                    <Typography variant="body2" color="text.secondary" sx={{ marginBottom: "20px" }}>
+                    <Typography component={'span'} variant="body2" color="text.secondary" sx={{ display: 'block', marginBottom: "20px" }}>
                         <OutlinedInput
-                            id="outlined-adornment-amount"
                             multiline
                             placeholder="Text"
                             inputProps={{ maxLength: 250 }}
@@ -84,26 +95,37 @@ function AuctionForm({ userId }) {
                             onChange={(i) => handleChange(i.target.value, setText)}
                         />
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ marginBottom: "20px" }}>
+                    <FormControl fullWidth>
+                        <InputLabel>Category</InputLabel>
+                        <Select
+                            value={category}
+                            label="Category"
+                            onChange={(i) => handleChange(i.target.value, setCategory)}
+                        >
+                            <MenuItem value={"Arts"}>Arts</MenuItem>
+                            <MenuItem value={"Fashion"}>Fashion</MenuItem>
+                            <MenuItem value={"Electronic"}>Electronic</MenuItem>
+                            <MenuItem value={"Stationary"}>Stationary</MenuItem>
+                            <MenuItem value={"Vehicle"}>Vehicle</MenuItem>
+                            <MenuItem value={"Other"}>Other</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoContainer components={['DateTimePicker']}>
+                            <DateTimePicker
+                                label="Last time to offer"
+                                value={endDate}
+                                onChange={(newValue) => handleChange(newValue, setEndDate)} />
+                        </DemoContainer>
+                    </LocalizationProvider>
+                    <Typography component={'span'} variant="body2" color="text.secondary" sx={{ display: 'block', marginBottom: "20px", marginTop: "20px" }}>
                         <OutlinedInput
-                            id="outlined-adornment-amount"
                             multiline
                             placeholder="Value"
                             inputProps={{ maxLength: 25 }}
                             fullWidth
                             value={value}
                             onChange={(i) => handleChange(i.target.value, setValue)}
-                        />
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" >
-                        <OutlinedInput
-                            id="outlined-adornment-amount"
-                            multiline
-                            placeholder="Category"
-                            inputProps={{ maxLength: 25 }}
-                            fullWidth
-                            value={category}
-                            onChange={(i) => handleChange(i.target.value, setCategory)}
                             endAdornment={
                                 <InputAdornment position="end">
                                     <Button

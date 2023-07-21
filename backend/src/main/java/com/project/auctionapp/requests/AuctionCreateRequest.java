@@ -1,5 +1,7 @@
 package com.project.auctionapp.requests;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -16,5 +18,7 @@ public class AuctionCreateRequest {
     String text;
 
     String category;
+
+    Date endDate;
 
 }

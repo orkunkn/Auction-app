@@ -55,7 +55,7 @@ public class AuctionService {
 		newAuction.setUser(user);
 		newAuction.setCategory(newAuctionRequest.getCategory());
 		newAuction.setCreateDate(new Date());
-		
+		newAuction.setEndDate(newAuctionRequest.getEndDate());
 		newAuction.setValue(newAuctionRequest.getValue());
 		Auction result = auctionRepository.save(newAuction);
 		jedis.set(result.getId().toString(), newAuctionRequest.getValue().toString());

@@ -1,8 +1,8 @@
-import { CardContent, OutlinedInput } from "@mui/material";
+import { CardContent, OutlinedInput, Typography } from "@mui/material";
 import React from "react";
 
 function Offer(props) {
-    const { bid } = props;
+    const { username, bid } = props;
 
     return (
         <CardContent sx={{
@@ -12,14 +12,17 @@ function Offer(props) {
             alignItems: "center"
         }}>
             <OutlinedInput disabled
-                id="outlined-adornment-amount"
                 multiline
-                placeholder="Title"
-                inputProps={{ maxLength: 10 }}
-                fullWidth
+                sx={{ display: 'inline-block' }}
                 value={bid}
                 style={{ color: "black", backGroundColor: "white" }}
-            ></OutlinedInput>
+            >
+            </OutlinedInput>
+            <Typography
+                sx={{ display: 'inline-block', marginLeft: '100px' }}
+                style={{ color: "black", backGroundColor: "white" }}
+            >From {username}
+            </Typography>
         </CardContent>
     )
 }

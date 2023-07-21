@@ -4,7 +4,6 @@ import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { Container } from "@mui/material";
 import Offer from "../Offer/Offer";
@@ -12,11 +11,12 @@ import Button from "@mui/material/Button";
 import OfferForm from "../Offer/OfferForm";
 
 function Auction(props) {
-    const { title, text, auctionId, value, category } = props;
+    const { title, text, auctionId, value, category, username, endDate } = props;
     const [expanded, setExpanded] = useState(false);
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [offerList, setOfferList] = useState([]);
+    let disabled = localStorage.getItem("currentUser") == null ? true : false
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -44,18 +44,22 @@ function Auction(props) {
 
     return (
         <Card sx={{
-            width: 600,
+            width: 530,
             textAlign: "left",
-            margin: 20
+            margin: 5,
+            borderStyle: 'ridge', borderWidth: 'medium', borderRadius: '20px', borderColor: 'blue'
         }}>
-            <CardHeader style={{ textAlign: 'center' }}
-                title={title}
+            <CardHeader style={{ textAlign: "center", borderBottom: "3px solid black" }}
+                title={username}
             />
             <CardContent>
-                <Typography variant="body1" style={{ textAlign: 'center', paddingBottom: '50px' }}>
-                    Category:{category}
+                <Typography variant="h3" style={{ textAlign: 'center', paddingBottom: '50px' }}>
+                    {title}
                 </Typography>
-                <Typography variant="body1" style={{ textAlign: 'center', paddingBottom: '50px' }}>
+                <Typography variant="h5" style={{ textAlign: 'center', paddingBottom: '50px' }}>
+                    {category}
+                </Typography>
+                <Typography variant="h6" style={{ textAlign: 'center', paddingBottom: '50px' }}>
                     {text}
                 </Typography>
                 <Typography variant="h3" style={{ textAlign: 'center', borderStyle: 'solid', borderWidth: 'medium', borderRadius: '20px', borderColor: 'blue' }}>
@@ -63,24 +67,15 @@ function Auction(props) {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton
-                    sx={{
-                        transform: 'rotate(0deg)',
-                        marginLeft: 'auto'
-                    }}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="Show offers"
-                >
-                    <Button variant="contained">Show Previous Offers</Button>
-                </IconButton>
+                {disabled ? <Button variant="contained" sx={{ marginLeft: 'auto' }}>Login To See Previous Offers</Button>
+                    : <Button variant="contained" onClick={handleExpandClick} aria-expanded={expanded} sx={{ marginLeft: 'auto' }}>Show Previous Offers</Button>}
             </CardActions>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <Container fixed>
-                    <OfferForm userId={1} auctionId={auctionId} ></OfferForm>
+            <Collapse in={expanded} timeout="auto" unmountOnExit >
+                <Container fixed >
+                    <OfferForm userId={localStorage.getItem("currentUser")} auctionId={auctionId} value={value} ></OfferForm>
                     {error ? "error" :
-                        isLoaded ? offerList.map(offer => (
-                            <Offer bid={offer.bid}></Offer>
+                        isLoaded ? offerList.toReversed().map(offer => (
+                            <Offer bid={offer.bid} username={username} key={offer.id}></Offer>
                         )) : "Loading"}
                 </Container>
             </Collapse>
