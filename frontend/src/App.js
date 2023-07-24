@@ -7,6 +7,7 @@ import { Navigate } from 'react-router-dom';
 import Auth from './Components/Auth/Auth';
 
 function App() {
+
   return (
     <div className="App">
       <BrowserRouter>

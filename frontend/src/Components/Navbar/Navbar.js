@@ -15,7 +15,7 @@ function Navbar() {
         localStorage.removeItem("tokenKey")
         localStorage.removeItem("currentUser")
         localStorage.removeItem("refreshKey")
-        localStorage.removeItem("userName")
+        localStorage.removeItem("username")
         window.history.go(0)
     }
 
@@ -43,7 +43,15 @@ function Navbar() {
                             boxShadow: "none",
                             color: "white"
                         }} to='/auth'>Login/Register</Link> :
-                            <IconButton onClick={onClick}><LockOpen></LockOpen></IconButton>}
+                            <div style={{
+                                display: 'flex',
+                                flexFlow: 'row-reverse',
+                                alignItems: 'center',
+                                gap: '10px'
+                            }}>
+                                <IconButton onClick={onClick}><LockOpen></LockOpen></IconButton>
+                                <Typography>{localStorage.getItem("username")}</Typography>
+                            </div>}
                     </Typography>
                 </Toolbar>
             </AppBar>

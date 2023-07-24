@@ -8,7 +8,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 function OfferForm(props) {
-    const { auctionId, userId, value } = props;
+    const { auctionId, userId, value, refreshAuctions } = props;
     const [bid, setBid] = useState(0);
     const [isLowOffer, setIsLowOffer] = useState(false)
 
@@ -16,7 +16,7 @@ function OfferForm(props) {
         localStorage.removeItem("tokenKey")
         localStorage.removeItem("currentUser")
         localStorage.removeItem("refreshKey")
-        localStorage.removeItem("userName")
+        localStorage.removeItem("username")
         window.history.go(0)
     }
 
@@ -82,7 +82,7 @@ function OfferForm(props) {
                     value: bid
                 }),
             })
-            .then((res) => res.json())
+            .then((res) => refreshAuctions())
             .catch((err) => console.log("error"))
     }
 

@@ -1,5 +1,7 @@
 package com.project.auctionapp.responses;
 
+import java.util.Date;
+
 import com.project.auctionapp.entities.Auction;
 
 import lombok.Data;
@@ -21,6 +23,8 @@ public class AuctionResponse {
 
 	String category;
 
+	Date endDate;
+
 	public AuctionResponse(Auction entity) {
 		this.id = entity.getId();
 		this.userId = entity.getUser().getId();
@@ -29,5 +33,6 @@ public class AuctionResponse {
 		this.title = entity.getTitle();
 		this.text = entity.getText();
 		this.category = entity.getCategory();
+		this.endDate = entity.getEndDate();
 	}
 }

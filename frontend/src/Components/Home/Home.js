@@ -38,7 +38,7 @@ function Home() {
                 backgroundColor: "#f0f5ff",
             }}>
                 {auctionList.map(auction => (
-                    <Auction title={auction.title} text={auction.text} value={auction.value} auctionId={auction.id} category={auction.category} username={auction.username} key={auction.id} endDate={auction.endDate}></Auction>
+                    <Auction title={auction.title} text={auction.text} value={auction.value} auctionId={auction.id} category={auction.category} username={auction.username} key={auction.id} endDate={auction.endDate} refreshAuctions={refreshAuctions}></Auction>
                 ))}
             </div>
         );

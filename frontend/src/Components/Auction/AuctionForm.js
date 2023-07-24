@@ -14,6 +14,7 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import dayjs from "dayjs";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -115,7 +116,9 @@ function AuctionForm({ userId }) {
                             <DateTimePicker
                                 label="Last time to offer"
                                 value={endDate}
-                                onChange={(newValue) => handleChange(newValue, setEndDate)} />
+                                onChange={(newValue) => handleChange(newValue, setEndDate)}
+                                minDate={dayjs(new Date())}
+                                sx={{ marginTop: "20px" }} />
                         </DemoContainer>
                     </LocalizationProvider>
                     <Typography component={'span'} variant="body2" color="text.secondary" sx={{ display: 'block', marginBottom: "20px", marginTop: "20px" }}>
@@ -126,22 +129,19 @@ function AuctionForm({ userId }) {
                             fullWidth
                             value={value}
                             onChange={(i) => handleChange(i.target.value, setValue)}
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <Button
-                                        variant="contained"
-                                        style={{
-                                            background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-                                            color: 'white'
-                                        }}
-                                        onClick={handleSubmit}
-                                    >
-                                        Create
-                                    </Button>
-                                </InputAdornment>
-                            }
+
                         />
                     </Typography>
+                    <Button
+                        variant="contained"
+                        style={{
+                            background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                            color: 'white'
+                        }}
+                        onClick={handleSubmit}
+                    >
+                        Create
+                    </Button>
                 </CardContent>
             </Card>
         </div>

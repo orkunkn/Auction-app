@@ -22,10 +22,7 @@ function Auth() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    username: username,
-                    password: password
-                }),
+                body: JSON.stringify({ username, password })
             })
             .then((res) => res.json())
             .then((result) => {
@@ -33,11 +30,13 @@ function Auth() {
                 localStorage.setItem("refreshKey", result.refreshToken)
                 localStorage.setItem("currentUser", result.userId);
                 localStorage.setItem("username", username)
+                window.history.go(0);
+
             })
     }
 
     const handleButton = (path) => {
-        sendRequest(path)
+        sendRequest(path);
     }
 
     return (
